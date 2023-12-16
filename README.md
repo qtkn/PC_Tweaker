@@ -6,7 +6,7 @@ Welcome to Performance Optimizer, an application designed to enhance your PC's p
 
 **Getting Started**
 
-1. Visit the "Releases" section to [download the latest version](#).
+1. Visit the "Releases" section to [download the latest version](https://github.com/qtkn/PC_Tweaker/releases/tag/pcoptimizer).
 2. Execute the application and optimize your PC by systematically exploring each feature. If you require guidance, a comprehensive [video tutorial](#) will be available shortly.
 
 [Watch the Tutorial Video](#) (coming soon)
