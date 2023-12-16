@@ -1,19 +1,30 @@
-# PX Tweaker / PC Tweaker
-Application To Make Your PC Runs Better !
+# Performance Optimizer: Fine-Tune Your PC for Peak Efficiency
 
-## Getting Started
+## Introduction
 
-Firstly, Go to Releases and download the latest version and just start running very option if you don't know how here is video that explains everything for you
+Welcome to Performance Optimizer, an application designed to enhance your PC's performance for a smoother and more efficient experience. Follow the steps below to get started.
 
-Video Soon
+**Getting Started**
 
-## Prerequisites
+1. Visit the "Releases" section to [download the latest version](#).
+2. Execute the application and optimize your PC by systematically exploring each feature. If you require guidance, a comprehensive [video tutorial](#) will be available shortly.
 
-Windows 10 or Windows 11
+[Watch the Tutorial Video](#) (coming soon)
 
-## Contact
-[Discord](http://www.discord.gg/uxk6DXtFpN)
+## System Requirements
 
-## Version
+Ensure your PC meets the following prerequisites:
 
-0.1 Beta
+- Windows 10 or Windows 11 operating system.
+
+## Contact Information
+
+For assistance or inquiries, join our Discord community:
+
+[Discord Server](http://www.discord.gg/uxk6DXtFpN)
+
+## Current Version
+
+Performance Optimizer 0.1 Beta
+
+Experience peak performance with Performance Optimizer – Your PC's efficiency, elevated.
