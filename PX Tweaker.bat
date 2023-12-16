@@ -1,5 +1,5 @@
 @echo off
-title PX Tweaker 0.1
+title PX Tweaker 0.9
 cls
 
 :menu
@@ -12,9 +12,13 @@ echo 2. High Performance Power Plan
 echo 3. Clean Temporary Files
 echo 4. Disable unnecessary services
 echo 5. Disable Cortona
-echo 6. Restart ( To Apply Changes )
+echo 6. Fix Ping Issues
+echo 7. Optimize Windows Services
+echo 8. Disable Windows 10 Telemetry
+echo 9. Disable Windows 11 Telemetry
+echo 10. Restart ( To Apply Changes )
 
-set /p choice=Enter your choice (1-6): 
+set /p choice=Enter your choice (1-10): 
 
 if "%choice%"=="0" goto RestorePoint
 if "%choice%"=="1" goto scanpc
@@ -22,7 +26,11 @@ if "%choice%"=="2" goto adjustPowerPlan
 if "%choice%"=="3" goto clean
 if "%choice%"=="4" goto disableuncessarly
 if "%choice%"=="5" goto Cortona
-if "%choice%"=="6" goto Restart
+if "%choice%"=="6" goto ping
+if "%choice%"=="7" goto optimizewindowsservices
+if "%choice%"=="8" goto win10telemetry
+if "%choice%"=="9" goto win11telemetry
+if "%choice%"=="10" goto Restart
 
 echo Invalid choice. Please try again.
 goto menu
@@ -100,6 +108,56 @@ Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "Disabl
 chcp 431 >nul 
 Powershell -Command "Get-appxpackage -allusers *Microsoft.549981C3F5F10* | Remove-AppxPackage" 
 echo Disabled Cortona Successfully
+goto menu
+
+:ping
+REM Flush DNS Cache
+ipconfig /flushdns
+
+
+REM Release and Renew IP Configuration
+ipconfig /release
+ipconfig /renew
+
+
+REM Reset Winsock
+netsh winsock reset
+
+
+REM Reset TCP/IP stack
+netsh int ip reset
+
+netsh int tcp set global autotuninglevel=normal
+netsh int tcp set heuristics disabled
+netsh int tcp set global chimney=enabled
+netsh int tcp set global rss=enabled
+
+echo Ping issues may be resolved. Please check your connection.
+goto menu
+
+:optimizewindowsservices
+netsh advfirewall set allprofiles state off
+netsh interface tcp set global autotuning=disabled
+netsh int tcp set heuristics disabled
+netsh int tcp set global chimney=disabled
+netsh int tcp set global rss=enabled
+netsh int tcp show global
+echo Windows services optimized.
+goto menu
+
+:win10telemetry
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+echo Windows 10 telemetry disabled.
+goto menu
+
+:win11telemetry
+sc stop DiagTrack
+sc config DiagTrack start=disabled
+sc stop dmwappushservice
+sc config dmwappushservice start=disabled
+sc stop Wecsvc
+sc config Wecsvc start=disabled
+echo Windows 11 telemetry disabled.
 goto menu
 
 :Restart
