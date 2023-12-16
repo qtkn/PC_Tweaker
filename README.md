@@ -25,6 +25,6 @@ For assistance or inquiries, join our Discord community:
 
 ## Current Version
 
-Performance Optimizer 0.1 Beta
+Performance Optimizer 0.9 Beta
 
 Experience peak performance with Performance Optimizer – Your PC's efficiency, elevated.
