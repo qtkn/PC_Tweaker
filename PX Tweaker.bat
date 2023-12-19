@@ -1,5 +1,5 @@
 @echo off
-title PX Tweaker 0.9
+title PX Tweaker 1.0 Release! Made By qtkn
 cls
 
 :menu
@@ -16,7 +16,12 @@ echo 6. Fix Ping Issues
 echo 7. Optimize Windows Services
 echo 8. Disable Windows 10 Telemetry
 echo 9. Disable Windows 11 Telemetry
-echo 10. Restart ( To Apply Changes )
+echo 10. Optimize Registry
+echo 11. Disable Windows Search Indexing
+echo 12. Optimize Visual Effects
+echo 13. Optimize Windows 11/10 Boot Time
+echo 14. Mouse And Keyboard Optimization
+echo 15. Restart ( To Apply Changes )
 
 set /p choice=Enter your choice (1-10): 
 
@@ -30,7 +35,12 @@ if "%choice%"=="6" goto ping
 if "%choice%"=="7" goto optimizewindowsservices
 if "%choice%"=="8" goto win10telemetry
 if "%choice%"=="9" goto win11telemetry
-if "%choice%"=="10" goto Restart
+if "%choice%"=="10" goto optimizeregistry
+if "%choice%"=="11" goto searchindex
+if "%choice%"=="12" goto optimizevisuals
+if "%choice%"=="13" goto boottime
+if "%choice%"=="14" goto mouseandkb
+if "%choice%"=="15" goto Restart
 
 echo Invalid choice. Please try again.
 goto menu
@@ -80,6 +90,7 @@ reg add "%R_Key%\Temporary Files" /v StateFlags0011 /t REG_DWORD /d 00000002 /f
 reg add "%R_Key%\Windows Error Reporting Files" /v StateFlags0011 /t REG_DWORD /d 00000002 /f
 reg add "%R_Key%\Offline Pages Files" /v StateFlags0011 /t REG_DWORD /d 00000002 /f
 cleanmgr.exe /sagerun:11
+del /q /s %LocalAppData%\Microsoft\Windows\Explorer\thumbcache_*.db
 echo Cleaned Successfully
 goto menu
 
@@ -158,6 +169,41 @@ sc config dmwappushservice start=disabled
 sc stop Wecsvc
 sc config Wecsvc start=disabled
 echo Windows 11 telemetry disabled.
+goto menu
+
+:optimizeregistry
+reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer /v Max Cached Icons /t REG_SZ /d 2048 /f
+reg add HKCU\Control Panel\Desktop /v MenuShowDelay /t REG_SZ /d 150 /f
+echo Registry optimized.
+goto menu
+
+:searchindex
+sc config WSearch start=disabled
+net stop WSearch
+echo Windows Search Indexing disabled.
+goto menu
+
+:optimizevisuals
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v "VisualFXSetting" /t REG_DWORD /d 2 /f
+echo Visual effects optimized for performance.
+goto menu
+
+:boottime
+bcdedit /set useplatformclock true
+powercfg /hibernate off
+echo Windows boot time optimized.
+goto menu
+
+:mouseandkb
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "KeyboardDataQueueSize" /t REG_DWORD /d 50 /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "ConnectMultiplePorts" /t REG_DWORD /d 0 /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "KeyboardDeviceBaseName" /t REG_SZ /d "KeyboardClass" /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "MaximumPortsServiced" /t REG_DWORD /d 3 /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "SendOutputToAllPorts" /t REG_DWORD /d 1 /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\kbdclass\Parameters" /v "WppRecorder_TraceGuid" /t REG_SZ /d "{09281f1f-f66e-485a-99a2-91638f782c49}" /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mouclass\Parameters" /v "MouseDataQueueSize" /t REG_DWORD /d 50 /f
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\mouclass\Parameters" /v "WppRecorder_TraceGuid" /t REG_SZ /d "{fc8df8fd-d105-40a9-af75-2eec294adf8d}" /f
+echo Mouse And Keyboard optimized.
 goto menu
 
 :Restart
